@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(MyApp());
@@ -24,14 +25,16 @@ class _MyCheckListState extends State<MyCheckList> {
   final _textController = TextEditingController();
 
   void _addItem() {
-    setState(() {
+    setState(() async {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
       _todoList.add(_textController.text);
       _textController.text = '';
     });
   }
 
   void _removeItem(int index) {
-    setState(() {
+    setState(() async {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
       _todoList.removeAt(index);
     });
   }
@@ -52,8 +55,6 @@ class _MyCheckListState extends State<MyCheckList> {
           ),
           ElevatedButton(
             onPressed: _addItem,
-            final SharedPreferences prefs = 
-            await SharedPreferences.getInstance();
             child: Text('Hinzufügen'),
           ),
           Expanded(
